@@ -24,9 +24,11 @@ function fillHTML() {
         const readComp = await fs.promises.readFile(
           path.join(compDirPath, file),
         );
-        const compName = path.basename(file, path.extname(file));
-        const stringComp = readComp.toString();
-        stringTemp = stringTemp.replace(`{{${compName}}}`, stringComp);
+        if (path.extname(file) === '.html') {
+          const compName = path.basename(file, path.extname(file));
+          const stringComp = readComp.toString();
+          stringTemp = stringTemp.replace(`{{${compName}}}`, stringComp);
+        }
       });
 
       await Promise.all(compPromises);
